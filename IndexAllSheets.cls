@@ -1,5 +1,5 @@
 ' This Sub creates a vertical list of the name of all sheets in the worbook on the First sheet.
-Sub indexthisheet()
+Sub IndexAllSheets()
 Dim i As Integer
 
 For i = 1 To Worksheets.count
