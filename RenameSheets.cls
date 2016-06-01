@@ -1,3 +1,4 @@
+'This Sub renames all sheets to the value of each Sheets Cell A1
 Sub rename_sheets
 Dim i as integer
 
