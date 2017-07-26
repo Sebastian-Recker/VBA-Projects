@@ -1,0 +1,17 @@
+Sub TraceCellPrecedents()
+Dim i As Range
+Dim j As Integer
+
+For j = 9 To 50
+    If Cells(j, 6).Value = "" Or Cells(j, 6).Font.Bold Then
+    Else
+        With Cells(j, 6)
+            For Each i In .Precedents
+                i.Interior.ColorIndex = 4
+                i.Offset(0, 1).Value = Cells(j, 6).Offset(0, -1).Value
+            Next i
+        End With
+    End If
+Next j
+
+End Sub
