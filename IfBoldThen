@@ -1,0 +1,16 @@
+Sub IfBoldThen()
+Dim i As Integer
+Dim Nm As String
+
+For i = 14 To 8937
+    If Cells(i, 5).Font.Bold = True Then
+        Nm = Cells(i, 5).Value
+    Else
+        If Cells(i, 5).Value = "" Then
+        Else
+            Cells(i, 6).Value = Nm
+        End If
+    End If
+Next i
+
+End Sub
