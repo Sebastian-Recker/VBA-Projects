@@ -1,0 +1,46 @@
+
+
+Sub CreateTableOfContentsWorkbook()
+
+Application.Calculation = xlCalculationManual
+Application.ScreenUpdating = FALSE
+
+Dim i As Integer
+Dim j As Integer
+j = 6
+Dim count As Integer
+Worksheets.Add().Name = "TOC_sheet " & Worksheets.count
+Worksheets("TOC_sheet " & Worksheets.count-1).Move Before:=Worksheets(1)
+count = ActiveWorkbook.Worksheets.count
+
+Worksheets(1).Range("C1").ColumnWidth = 70
+
+For i = 1 To count
+    If Right(Worksheets(i).Name, 1) = ">" Then
+        j = j + 1
+        Worksheets(1).Cells(j, 3).Formula = "='" & Worksheets(i).Name & "'!" & Worksheets(i).Cells(15, 7).Address
+        Worksheets(1).Cells(j, 3).Font.Color = RGB(0, 43, 73)
+        Worksheets(1).Cells(j, 3).Font.Bold = True
+        Worksheets(1).Cells(j, 3).HorizontalAlignment = xlCenter
+        Worksheets(1).Cells(j, 3).Select
+        With Selection.Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ThemeColor = 5
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        j = j + 1
+    Else
+        Worksheets(i).Hyperlinks.Add Anchor:=Worksheets(1).Cells(j, 2), Address:="", SubAddress:= _
+        "'" & Worksheets(i).Name & "'!" & Cells(1, 1).Address, TextToDisplay:=Worksheets(i).Name
+        Worksheets(1).Cells(j, 2).HorizontalAlignment = xlCenter
+         Worksheets(1).Cells(j, 3).Formula = "='" & Worksheets(i).Name & "'!" & Worksheets(i).Cells(3, 1).Address
+        j = j + 1
+    End If
+Next I
+
+Application.Calculation = xlCalculationAutomatic
+Application.ScreenUpdating = TRUE
+
+
+End Sub
