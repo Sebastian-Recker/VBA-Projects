@@ -1,0 +1,37 @@
+'This sub creates calculations underlying financial "bridge" graphs
+
+Sub MakeBridgeCalculations()
+Dim SelRange As Range
+Set SelRange = Selection
+
+If SelRange.Rows.Count > 1 Then
+    Exit Sub
+End If
+
+For Each c In SelRange.Cells
+    If c.Offset(-1, 0).Value < 0 Then
+        If c.Offset(-1, -1).Font.Color = RGB(255, 0, 0) Then
+            If Left(c.Offset(-1, 0).Formula, 1) = "=" Then
+                c.Offset(-1, 0).Formula = "=-1*" & Right(c.Offset(-1, 0).Formula, Len(c.Offset(-1, 0).Formula) - 1)
+            Else
+                c.Offset(-1, 0).Formula = "=-1*" & c.Offset(-1, 0).Formula
+            End If
+            c.Offset(-1, 0).Font.Color = RGB(255, 0, 0)
+            c.Formula = "=" & c.Offset(0, -1).Address(False) & "-" & c.Offset(-1, 0).Address(False)
+        Else
+            If Left(c.Offset(-1, 0).Formula, 1) = "=" Then
+                c.Offset(-1, 0).Formula = "=-1*" & Right(c.Offset(-1, 0).Formula, Len(c.Offset(-1, 0).Formula) - 1)
+            Else
+                c.Offset(-1, 0).Formula = "=-1*" & c.Offset(-1, 0).Formula
+            End If
+            c.Offset(-1, 0).Font.Color = RGB(255, 0, 0)
+            c.Formula = "=SUM(" & c.Offset(-1, -1).Address(False) & ":" & c.Offset(0, -1).Address(False) & ")" & "-" & c.Offset(-1, 0).Address(False)
+        End If
+    ElseIf c.Offset(-1, -1).Font.Color = RGB(255, 0, 0) Then
+        c.Formula = "=" & c.Offset(0, -1).Address(False)
+    Else
+        c.Formula = "=SUM(" & c.Offset(-1, -1).Address(False) & ":" & c.Offset(0, -1).Address(False) & ")"
+    End If
+Next
+
+End Sub
