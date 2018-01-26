@@ -1,0 +1,58 @@
+'This sub checks if content of a cell is equal to one of the values in an array, enabling conditional opearations based on arrays.
+
+Sub CheckValuesAgainstArray()
+
+Application.Calculation = xlCalculationManual
+Application.ScreenUpdating = False
+
+Dim SelRange As Range
+Set SelRange = Selection
+Dim AA As Integer
+AA = 0
+Dim i As Integer
+Dim arr(10) As String
+arr(0) = "A."
+arr(1) = "B."
+arr(2) = "C."
+arr(3) = "D."
+arr(4) = "E."
+arr(5) = "F."
+arr(6) = "G."
+arr(7) = "H."
+arr(8) = "I."
+arr(9) = "J."
+arr(10) = "K."
+
+For Each c In SelRange.Cells
+    If Left(c.Value, 1) = "I" Or Left(c.Value, 1) = "V" Or Left(c.Value, 1) = "X" Then
+        c.Offset(0, -3).Value = c.Value
+    End If
+    
+    If IsInArray(Left(c.Value, 2), arr) Then
+        c.Offset(0, -2).Value = c.Value
+    End If
+Next c
+
+Application.Calculation = xlCalculationAutomatic
+Application.ScreenUpdating = True
+
+End Sub
+
+Private Function IsInArray(valToBeFound As Variant, arr As Variant) As Boolean
+'DEVELOPER: Ryan Wells (wellsr.com)
+'DESCRIPTION: Function to check if a value is in an array of values
+'INPUT: Pass the function a value to search for and an array of values of any data type.
+'OUTPUT: True if is in array, false otherwise
+Dim element As Variant
+On Error GoTo IsInArrayError: 'array is empty
+    For Each element In arr
+        If element = valToBeFound Then
+            IsInArray = True
+            Exit Function
+        End If
+    Next element
+Exit Function
+IsInArrayError:
+On Error GoTo 0
+IsInArray = False
+End Function
