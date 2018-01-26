@@ -1,4 +1,4 @@
-
+'This sub indexes all sheets in the Excel file and creates a Table of Content sheet at the begining of the workbook with Hyperlinks and direct links.
 
 Sub CreateTableOfContentsWorkbook()
 
